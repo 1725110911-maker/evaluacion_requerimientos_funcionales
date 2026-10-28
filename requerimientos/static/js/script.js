@@ -1,40 +1,38 @@
 async function evaluacion() {
-    try{
-
-        const uri = "http://localhost:11434/v1/systemone";
-        const requerimiento = "El usuario ingresa su email y contraseña, y el sistema y el sistema evalua si es valido o no";
+    try {
+        const uri = "https://potential-pancake-9qr7vvxw752p66p-11434.app.github.dev/v1/systemone";
+        const requerimiento = "Cuando el usuario ingresa su email y contraseña, el sistema evalúa si es válido o no";
 
         const data = {
-                model : 'd1-omni:600m',
-                state : requerimiento, 
-                questions : {
-                    'condicion': {
-                        "type": "noul",
-                        "instructions": "¿El texto incluye una condición o evento disparador (ej. 'Cuando...', 'Si...', 'Al hacer clic...')?",
-                        "criteria": {
-                            "true": "El texto especifica claramente qué evento o acción del usuario inicia el proceso.",
-                            "false": "No especifica ningún evento o acción desencadenante."
-                        }
+            model: 'd1-omni:600m',
+            state: requerimiento, 
+            questions: {
+                'condicion': {
+                    "type": "noul",
+                    "instructions": "¿El texto incluye una condición o evento disparador (ej. 'Cuando...', 'Si...', 'Al hacer clic...')?",
+                    "criteria": {
+                        "true": "El texto especifica claramente qué evento o acción del usuario inicia el proceso.",
+                        "false": "No especifica ningún evento o acción desencadenante."
                     }
                 }
-        }
+            }
+        };
 
-        const responde = await fetch(
+        const response = await fetch(
             uri,
             {
-                method:"POST",
+                method: "POST",
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type": "application/json"
                 }, 
                 body: JSON.stringify(data)
             }
         );
 
-        const resultado = await responde.json();
-
+        const resultado = await response.json();
         console.log("Conexión con la API exitosa:", resultado);
 
     } catch (error) {
-        console.log("Ups algo fallo ", error.message);
+        console.log("Ups, algo falló:", error.message);
     }
 }
